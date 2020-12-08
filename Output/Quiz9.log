@@ -1,0 +1,100 @@
+-------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\willi\Documents\PLCY460\Output\Quiz9.log
+  log type:  text
+ opened on:  30 Oct 2020, 12:38:49
+
+. use "C:\Users\willi\Documents\PLCY460\Master Data\Quiz9"
+
+. 
+. // I 100% think i did this wrong because i want to say we have to do the indicator stuff of F-tests we prev
+> iously did but the questions make no mention of it so i assume its just regular regressions?
+. // I thought i could handle a quiz with an active gunman nearby but I guess I cant oops
+. // the helicopter is very distracting
+. 
+. // #2
+. sum gr8_math, detail
+
+                          C7R4MTSC
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%       29.579          24.69
+ 5%       36.435         25.071
+10%       40.183          25.13       Obs               6,093
+25%       46.386          25.45       Sum of Wgt.       6,093
+
+50%       52.682                      Mean           52.46178
+                        Largest       Std. Dev.      9.308256
+75%       58.957         74.819
+90%       64.575         74.819       Variance       86.64362
+95%       67.279         74.819       Skewness       -.181569
+99%       71.943         74.819       Kurtosis       2.745165
+
+. // mean: 52.46
+. // standard deviation: 9.31
+. // range: 50.13
+. 
+. // #3
+. tab depression
+
+Child experienced depression in 8th |
+                              grade |      Freq.     Percent        Cum.
+------------------------------------+-----------------------------------
+Child did not experience depression |      4,712       77.33       77.33
+    Child did experience depression |      1,381       22.67      100.00
+------------------------------------+-----------------------------------
+                              Total |      6,093      100.00
+
+. // 22.67%
+. 
+. // #4
+. // it doesn't say to do this as an indicator? i assume just a regular bivariate
+. regress gr8_math depression
+
+      Source |       SS           df       MS      Number of obs   =     6,093
+-------------+----------------------------------   F(1, 6091)      =     25.93
+       Model |  2237.85961         1  2237.85961   Prob > F        =    0.0000
+    Residual |  525595.087     6,091  86.2904428   R-squared       =    0.0042
+-------------+----------------------------------   Adj R-squared   =    0.0041
+       Total |  527832.946     6,092  86.6436222   Root MSE        =    9.2893
+
+------------------------------------------------------------------------------
+    gr8_math |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  depression |  -1.447547    .284248    -5.09   0.000    -2.004773   -.8903199
+       _cons |   52.78987   .1353252   390.10   0.000     52.52459    53.05516
+------------------------------------------------------------------------------
+
+. // the coefficient indicated depression has a negative impact on test score. this is not statistically sign
+> ificant because we have a low R^2 value and taking depression alone does not explain for all variability.
+. 
+. // #5
+. regress gr8_math depression female white parent_ba parent_income k_genknow
+
+      Source |       SS           df       MS      Number of obs   =     6,093
+-------------+----------------------------------   F(6, 6086)      =    388.00
+       Model |  146040.496         6  24340.0826   Prob > F        =    0.0000
+    Residual |  381792.451     6,086  62.7329035   R-squared       =    0.2767
+-------------+----------------------------------   Adj R-squared   =    0.2760
+       Total |  527832.946     6,092  86.6436222   Root MSE        =    7.9204
+
+-------------------------------------------------------------------------------
+     gr8_math |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+   depression |  -.6225338   .2430486    -2.56   0.010    -1.098995   -.1460724
+       female |  -1.049243   .2030532    -5.17   0.000    -1.447299    -.651187
+        white |     1.7716   .2579218     6.87   0.000     1.265982    2.277218
+    parent_ba |   3.462152   .2351612    14.72   0.000     3.001153    3.923151
+parent_income |   .0000143   1.94e-06     7.36   0.000     .0000105    .0000181
+    k_genknow |    1.09882   .0385857    28.48   0.000     1.023179    1.174462
+        _cons |   43.41685   .2807132   154.67   0.000     42.86655    43.96715
+-------------------------------------------------------------------------------
+
+. // parent education, general knowledge and race seem to have a positive coefficient relationship with test 
+> score  while depression and is female have a negative relationship with test score. parent income seems to 
+> have little affect. it is significant because we have a higher R^2 value (.27) so more variance is explaine
+> d but it is only enough for a small linear association.
+. 
+end of do-file
+
+. exit, clear

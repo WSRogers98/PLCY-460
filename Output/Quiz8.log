@@ -1,0 +1,119 @@
+-------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\willi\Documents\PLCY460\Output\Quiz8.log
+  log type:  text
+ opened on:  23 Oct 2020, 12:37:16
+
+. use "C:\Users\willi\Documents\PLCY460\Master Data\zambia_child_grant_evaluation"
+(Zambia Child Grant program Evaluation Data: Baseline & 24M follow-up)
+
+. 
+. reg chicken_num
+
+      Source |       SS           df       MS      Number of obs   =     4,815
+-------------+----------------------------------   F(0, 4814)      =      0.00
+       Model |           0         0           .   Prob > F        =         .
+    Residual |  96707.1103     4,814  20.0887225   R-squared       =    0.0000
+-------------+----------------------------------   Adj R-squared   =    0.0000
+       Total |  96707.1103     4,814  20.0887225   Root MSE        =     4.482
+
+------------------------------------------------------------------------------
+ chicken_num |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       _cons |   2.221807   .0645919    34.40   0.000     2.095177    2.348436
+------------------------------------------------------------------------------
+
+. 
+. * #1
+. * could i just use given treatment and post?
+. gen postTreat = 1 if  (treat==1 & post ==1)
+(3,778 missing values generated)
+
+. replace postTreat = 0 if (treat!=1 | post !=1)
+(3,778 real changes made)
+
+. tab postTreat
+
+  postTreat |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |      3,778       74.99       74.99
+          1 |      1,260       25.01      100.00
+------------+-----------------------------------
+      Total |      5,038      100.00
+
+. * #2 & #3
+. * the transfer treatment seems to have a positive impact on the amount of chickens. inintially transfer and
+>  nontransfer are fairly similar but after treatment (post) there is a significant impact of the treatment. 
+> having roughly 2 chickens initially (1.88 for non-transfer)
+. reg chicken_num postTreat
+
+      Source |       SS           df       MS      Number of obs   =     4,815
+-------------+----------------------------------   F(1, 4813)      =     70.99
+       Model |  1405.70907         1  1405.70907   Prob > F        =    0.0000
+    Residual |  95301.4012     4,813  19.8008313   R-squared       =    0.0145
+-------------+----------------------------------   Adj R-squared   =    0.0143
+       Total |  96707.1103     4,814  20.0887225   Root MSE        =    4.4498
+
+------------------------------------------------------------------------------
+ chicken_num |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   postTreat |   1.266112   .1502678     8.43   0.000     .9715181    1.560705
+       _cons |   1.918624    .073533    26.09   0.000     1.774465    2.062782
+------------------------------------------------------------------------------
+
+. reg chicken_num post if treat ==1
+
+      Source |       SS           df       MS      Number of obs   =     2,411
+-------------+----------------------------------   F(1, 2409)      =     40.72
+       Model |   842.14943         1   842.14943   Prob > F        =    0.0000
+    Residual |  49817.6482     2,409  20.6798041   R-squared       =    0.0166
+-------------+----------------------------------   Adj R-squared   =    0.0162
+       Total |  50659.7976     2,410  21.0206629   Root MSE        =    4.5475
+
+------------------------------------------------------------------------------
+ chicken_num |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        post |   1.183146    .185403     6.38   0.000     .8195797    1.546712
+       _cons |    2.00159   .1282132    15.61   0.000      1.75017    2.253009
+------------------------------------------------------------------------------
+
+. reg chicken_num post if treat  ==0
+
+      Source |       SS           df       MS      Number of obs   =     2,404
+-------------+----------------------------------   F(1, 2402)      =      0.00
+       Model |  .043599292         1  .043599292   Prob > F        =    0.9617
+    Residual |  45470.5188     2,402  18.9302743   R-squared       =    0.0000
+-------------+----------------------------------   Adj R-squared   =   -0.0004
+       Total |  45470.5624     2,403  18.9224146   Root MSE        =    4.3509
+
+------------------------------------------------------------------------------
+ chicken_num |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        post |  -.0085269   .1776765    -0.05   0.962    -.3569421    .3398883
+       _cons |   1.879269   .1226212    15.33   0.000     1.638815    2.119724
+------------------------------------------------------------------------------
+
+. reg chicken_num treat if post ==1
+
+      Source |       SS           df       MS      Number of obs   =     2,298
+-------------+----------------------------------   F(1, 2296)      =     39.69
+       Model |  991.906985         1  991.906985   Prob > F        =    0.0000
+    Residual |  57374.5212     2,296   24.988903   R-squared       =    0.0170
+-------------+----------------------------------   Adj R-squared   =    0.0166
+       Total |  58366.4282     2,297  25.4098512   Root MSE        =    4.9989
+
+------------------------------------------------------------------------------
+ chicken_num |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       treat |   1.313993   .2085601     6.30   0.000     .9050072    1.722979
+       _cons |   1.870742   .1477307    12.66   0.000     1.581043    2.160442
+------------------------------------------------------------------------------
+
+. 
+. * #4
+. *assume there was no change in external factors like a disease that could kill livestock occurring. for thi
+> s to be valid only the treatment can be a contributing factor.
+. 
+end of do-file
+
+. exit, clear

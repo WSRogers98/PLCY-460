@@ -1,0 +1,101 @@
+---------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\willi\Documents\PLCY460\Output\GW13.log
+  log type:  text
+ opened on:   8 Nov 2020, 12:17:59
+
+. use "C:\Users\willi\Documents\PLCY460\Master Data\groupwork13"
+
+. 
+. // 13.1
+. // P(A) = All people that have a mother that graduated college (just Graduated College)
+. // 1491/11040 = 13.5%
+. // P(B) = All people that had a parent attend their class
+. // 3146/11040  = 28.50%
+. // P(C) = All people that had a parent that did not complete high school
+. // 1649/11040 = 14.94%
+. // P(A and B)
+. // 465/11040 = 4.21%
+. // P(A given B)
+. // 465/3146 = 14.78%
+. // P(B given A)
+. // 465/1491 =  31.19%
+. 
+. //13.2
+. regress married education age
+
+      Source |       SS           df       MS      Number of obs   =    16,177
+-------------+----------------------------------   F(2, 16174)     =   2018.40
+       Model |  670.988599         2    335.4943   Prob > F        =    0.0000
+    Residual |   2688.4056    16,174  .166217732   R-squared       =    0.1997
+-------------+----------------------------------   Adj R-squared   =    0.1996
+       Total |   3359.3942    16,176  .207677683   Root MSE        =     .4077
+
+------------------------------------------------------------------------------
+     married |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   education |   .0097377   .0011262     8.65   0.000     .0075302    .0119453
+         age |   .0185931   .0002927    63.53   0.000     .0180194    .0191668
+       _cons |  -.0273633   .0178736    -1.53   0.126    -.0623976    .0076709
+------------------------------------------------------------------------------
+
+. predict marriedLPM
+(option xb assumed; fitted values)
+
+. sum marriedLPM
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+  marriedLPM |     16,177    .7057551    .2036676   .2798641   1.170537
+
+. // it exceeds 1 so logit should be used
+. logit married education age
+
+Iteration 0:   log likelihood =  -9801.788  
+Iteration 1:   log likelihood = -8048.1395  
+Iteration 2:   log likelihood = -7929.2047  
+Iteration 3:   log likelihood = -7928.4306  
+Iteration 4:   log likelihood = -7928.4305  
+
+Logistic regression                             Number of obs     =     16,177
+                                                LR chi2(2)        =    3746.71
+                                                Prob > chi2       =     0.0000
+Log likelihood = -7928.4305                     Pseudo R2         =     0.1911
+
+------------------------------------------------------------------------------
+     married |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   education |   .0392199   .0072629     5.40   0.000     .0249849    .0534549
+         age |    .120348   .0023857    50.45   0.000     .1156722    .1250238
+       _cons |  -3.249974    .114195   -28.46   0.000    -3.473792   -3.026155
+------------------------------------------------------------------------------
+
+. sum married 
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+     married |     16,177    .7057551    .4557167          0          1
+
+. margins, dydx(education) atmean
+
+Conditional marginal effects                    Number of obs     =     16,177
+Model VCE    : OIM
+
+Expression   : Pr(married), predict()
+dy/dx w.r.t. : education
+at           : education       =    12.00828 (mean)
+               age             =    33.14051 (mean)
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   education |   .0069418   .0012922     5.37   0.000     .0044091    .0094746
+------------------------------------------------------------------------------
+
+. // 1 increase of education inctrease chance of marrierd by .69418 percentage points
+. 
+. 
+end of do-file
+
+. exit, clear

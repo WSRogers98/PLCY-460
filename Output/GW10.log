@@ -1,0 +1,88 @@
+-------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\willi\Documents\PLCY460\Output\GW10.log
+  log type:  text
+ opened on:  18 Oct 2020, 15:29:51
+
+. use "C:\Users\willi\Documents\PLCY460\Master Data\groupwork10"
+
+. 
+. gen treatment = 1 if age >=65
+(298,470 missing values generated)
+
+. replace treatment =0 if age<65
+(298,470 real changes made)
+
+. gen Post =1 if year == 2007
+(252,907 missing values generated)
+
+. replace Post =0 if year== 2005
+(252,907 real changes made)
+
+. 
+. *Comparison between selfemployment at different ages after Medicare Part-D
+. reg selfemployed Post if treatment ==1
+
+      Source |       SS           df       MS      Number of obs   =   232,993
+-------------+----------------------------------   F(1, 232991)    =      6.90
+       Model |  .621865683         1  .621865683   Prob > F        =    0.0086
+    Residual |  20993.3041   232,991  .090103498   R-squared       =    0.0000
+-------------+----------------------------------   Adj R-squared   =    0.0000
+       Total |   20993.926   232,992   .09010578   Root MSE        =    .30017
+
+------------------------------------------------------------------------------
+selfemployed |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        Post |   .0032695   .0012445     2.63   0.009     .0008303    .0057088
+       _cons |   .0984384   .0008956   109.91   0.000      .096683    .1001939
+------------------------------------------------------------------------------
+
+. reg selfemployed Post if treatment ==0
+
+      Source |       SS           df       MS      Number of obs   =   298,470
+-------------+----------------------------------   F(1, 298468)    =      4.13
+       Model |  .440979971         1  .440979971   Prob > F        =    0.0421
+    Residual |  31867.3362   298,468  .106769691   R-squared       =    0.0000
+-------------+----------------------------------   Adj R-squared   =    0.0000
+       Total |  31867.7772   298,469  .106770811   Root MSE        =    .32676
+
+------------------------------------------------------------------------------
+selfemployed |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        Post |  -.0024351   .0011982    -2.03   0.042    -.0047836   -.0000867
+       _cons |   .1228314   .0008715   140.95   0.000     .1211233    .1245394
+------------------------------------------------------------------------------
+
+. *Self employment seems to go up after itroduction of Medicare Part-D
+. 
+. reg selfemployed i.treatment##i.Post
+
+      Source |       SS           df       MS      Number of obs   =   531,463
+-------------+----------------------------------   F(3, 531459)    =    204.60
+       Model |  61.0505558         3  20.3501853   Prob > F        =    0.0000
+    Residual |  52860.6403   531,459  .099463252   R-squared       =    0.0012
+-------------+----------------------------------   Adj R-squared   =    0.0011
+       Total |  52921.6909   531,462  .099577563   Root MSE        =    .31538
+
+--------------------------------------------------------------------------------
+  selfemployed |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+---------------+----------------------------------------------------------------
+   1.treatment |  -.0243929   .0012621   -19.33   0.000    -.0268667   -.0219191
+        1.Post |  -.0024351   .0011565    -2.11   0.035    -.0047018   -.0001684
+               |
+treatment#Post |
+          1 1  |   .0057047   .0017456     3.27   0.001     .0022833     .009126
+               |
+         _cons |   .1228314   .0008411   146.03   0.000     .1211828    .1244799
+--------------------------------------------------------------------------------
+
+. *other two figures written on paper
+. 
+. *the interaction term estimates a causal estimate of the effect of treatment by telling us how different  s
+> elf employment is by using a control and controlling other factors that may affect the data
+. *assumptions that are required for this data is there are no changes to the economy that affect self employ
+> ment 
+. 
+end of do-file
+
+. exit, clear

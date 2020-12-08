@@ -1,0 +1,764 @@
+-------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\willi\Documents\PLCY460\Output\quiz4.log
+  log type:  text
+ opened on:  11 Sep 2020, 12:32:56
+
+. use "C:\Users\willi\Documents\PLCY460\Master Data\2017-18 NCAA Basketball Quiz"
+
+. 
+. *label win loss
+. label variable team_result "Win or Loss"
+
+. label define resultlabel 1 "win" 0 "loss"
+
+. label values team_result resultlabel
+
+. tab team_result
+
+Win or Loss |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       loss |      5,912       50.00       50.00
+        win |      5,912       50.00      100.00
+------------+-----------------------------------
+      Total |     11,824      100.00
+
+. 
+. *find home win rate
+. *home win rate is 68.91%
+. tab team_location
+
+       Team |
+   Location |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       Away |      5,308       44.89       44.89
+       Home |      5,308       44.89       89.78
+    Neutral |      1,208       10.22      100.00
+------------+-----------------------------------
+      Total |     11,824      100.00
+
+. tab team_location, nolabel
+
+       Team |
+   Location |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      5,308       44.89       44.89
+          2 |      5,308       44.89       89.78
+          3 |      1,208       10.22      100.00
+------------+-----------------------------------
+      Total |     11,824      100.00
+
+. gen homewin=1 if team_location==2 & team_result==1
+(8,166 missing values generated)
+
+. replace homewin=0 if team_location==2 & team_result==0
+(1,650 real changes made)
+
+. tab homewin
+
+    homewin |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |      1,650       31.09       31.09
+          1 |      3,658       68.91      100.00
+------------+-----------------------------------
+      Total |      5,308      100.00
+
+. 
+. * make blowout variable
+. gen blowout=1 if team_margin > 20
+(10,575 missing values generated)
+
+. replace blowout=0 if team_margin <=20
+(10,575 real changes made)
+
+. tab blowout
+
+    blowout |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |     10,575       89.44       89.44
+          1 |      1,249       10.56      100.00
+------------+-----------------------------------
+      Total |     11,824      100.00
+
+. 
+. *find UNC blowouts
+. tab team
+
+                                 Team |      Freq.     Percent        Cum.
+--------------------------------------+-----------------------------------
+                    Abilene Christian |         31        0.26        0.26
+                          Adams State |          1        0.01        0.27
+                            Air Force |         31        0.26        0.53
+                                Akron |         32        0.27        0.80
+                              Alabama |         35        0.30        1.10
+                          Alabama A&M |         31        0.26        1.36
+                        Alabama State |         31        0.26        1.62
+                   Alabama-Birmingham |         33        0.28        1.90
+                     Alaska-Anchorage |          3        0.03        1.93
+                          Albany (NY) |         32        0.27        2.20
+                    Albany State (GA) |          1        0.01        2.21
+                         Alcorn State |         32        0.27        2.48
+                          Alice Lloyd |          1        0.01        2.49
+                                Allen |          2        0.02        2.50
+                             American |         31        0.26        2.77
+                        Anderson (SC) |          1        0.01        2.77
+                      Antelope Valley |          2        0.02        2.79
+                    Appalachian State |         33        0.28        3.07
+                              Arcadia |          1        0.01        3.08
+                              Arizona |         34        0.29        3.37
+                        Arizona State |         31        0.26        3.63
+                             Arkansas |         35        0.30        3.92
+                       Arkansas State |         32        0.27        4.19
+                  Arkansas-Fort Smith |          2        0.02        4.21
+                 Arkansas-Little Rock |         32        0.27        4.48
+                  Arkansas-Pine Bluff |         35        0.30        4.78
+                    Arlington Baptist |          3        0.03        4.80
+                                 Army |         31        0.26        5.07
+                               Asbury |          2        0.02        5.08
+                               Auburn |         32        0.27        5.35
+                       Augustana (IL) |          1        0.01        5.36
+                          Austin Peay |         32        0.27        5.63
+                            Ave Maria |          2        0.02        5.65
+                                Avila |          2        0.02        5.67
+                           Ball State |         33        0.28        5.95
+                              Barclay |          1        0.01        5.95
+                               Baylor |         32        0.27        6.22
+                              Belmont |         33        0.28        6.50
+                        Bemidji State |          1        0.01        6.51
+                     Benedictine (AZ) |          1        0.01        6.52
+                                Berea |          1        0.01        6.53
+                         Bethany (WV) |          1        0.01        6.54
+                 Bethany College (KS) |          1        0.01        6.55
+                          Bethel (TN) |          1        0.01        6.55
+             Bethesda University (CA) |          4        0.03        6.59
+                      Bethune-Cookman |         33        0.28        6.87
+                           Binghamton |         32        0.27        7.14
+                    Black Hills State |          1        0.01        7.15
+                Blue Mountain College |          4        0.03        7.18
+               Bluefield College (VA) |          1        0.01        7.19
+                      Bluefield State |          2        0.02        7.21
+                 Bob Jones University |          2        0.02        7.22
+                          Boise State |         31        0.26        7.48
+                       Boston College |         34        0.29        7.77
+                    Boston University |         32        0.27        8.04
+                  Bowling Green State |         33        0.28        8.32
+                                Boyce |          1        0.01        8.33
+                              Bradley |         33        0.28        8.61
+                              Brescia |          1        0.01        8.62
+                              Brevard |          2        0.02        8.63
+                       Brewton-Parker |          1        0.01        8.64
+                     Bridgewater (VA) |          2        0.02        8.66
+                        Brigham Young |         34        0.29        8.95
+                                Brown |         27        0.23        9.18
+                               Bryant |         32        0.27        9.45
+                           Bryn Athyn |          1        0.01        9.46
+                             Bucknell |         34        0.29        9.74
+                              Buffalo |         34        0.29       10.03
+                               Butler |         34        0.29       10.32
+                                Cairn |          1        0.01       10.33
+                         Cal Lutheran |          2        0.02       10.34
+                             Cal Poly |         31        0.26       10.61
+                Cal State Bakersfield |         30        0.25       10.86
+                  Cal State Fullerton |         31        0.26       11.12
+                Cal State Los Angeles |          1        0.01       11.13
+               Cal State Monterey Bay |          1        0.01       11.14
+                 Cal State Northridge |         30        0.25       11.39
+                   Calvary University |          1        0.01       11.40
+                             Campbell |         31        0.26       11.66
+                             Canisius |         32        0.27       11.93
+                              Carroll |          1        0.01       11.94
+                         Carver Bible |          3        0.03       11.97
+                             Catholic |          1        0.01       11.98
+                       Centenary (LA) |          2        0.02       11.99
+                       Centenary (NJ) |          1        0.01       12.00
+                     Central Arkansas |         33        0.28       12.28
+            Central Connecticut State |         33        0.28       12.56
+                      Central Florida |         33        0.28       12.84
+                     Central Michigan |         34        0.29       13.13
+         Central Pennsylvania College |          6        0.05       13.18
+                   Central State (OH) |          1        0.01       13.19
+                            Chaminade |          3        0.03       13.21
+                     Champion Baptist |          1        0.01       13.22
+                              Chapman |          1        0.01       13.23
+                  Charleston Southern |         32        0.27       13.50
+                            Charlotte |         29        0.25       13.74
+                          Chattanooga |         34        0.29       14.03
+                        Chicago State |         32        0.27       14.30
+                          Christendom |          1        0.01       14.31
+                           Cincinnati |         35        0.30       14.61
+                  Cincinnati-Clermont |          1        0.01       14.61
+                              Citadel |         33        0.28       14.89
+             City College of New York |          1        0.01       14.90
+                        Clarks Summit |          1        0.01       14.91
+                              Clemson |         33        0.28       15.19
+                      Cleveland State |         36        0.30       15.49
+                     Coastal Carolina |         32        0.27       15.76
+                      Coastal Georgia |          1        0.01       15.77
+                                  Coe |          1        0.01       15.78
+                              Colgate |         32        0.27       16.05
+                College of Charleston |         33        0.28       16.33
+                             Colorado |         32        0.27       16.60
+                        Colorado Mesa |          1        0.01       16.61
+                       Colorado State |         32        0.27       16.88
+                             Columbia |         27        0.23       17.11
+               Columbia International |          2        0.02       17.13
+                              Concord |          2        0.02       17.14
+                       Concordia (AL) |          1        0.01       17.15
+                       Concordia (MI) |          1        0.01       17.16
+                       Concordia (NE) |          1        0.01       17.17
+                   Concordia-St. Paul |          3        0.03       17.19
+                          Connecticut |         33        0.28       17.47
+                         Coppin State |         33        0.28       17.75
+                              Cornell |         28        0.24       17.99
+                         Cornell (IA) |          1        0.01       18.00
+                            Creighton |         32        0.27       18.27
+                      Culver-Stockton |          2        0.02       18.28
+                                Curry |          1        0.01       18.29
+                         Dakota State |          1        0.01       18.30
+                     Dallas Christian |          1        0.01       18.31
+                            Dartmouth |         27        0.23       18.54
+                             Davidson |         32        0.27       18.81
+                               Dayton |         32        0.27       19.08
+                               DePaul |         32        0.27       19.35
+                             Defiance |          1        0.01       19.36
+                             Delaware |         33        0.28       19.64
+                       Delaware State |         32        0.27       19.91
+                               Denver |         31        0.26       20.17
+                        Detroit Mercy |         32        0.27       20.44
+                        Doane College |          1        0.01       20.45
+                                Drake |         32        0.27       20.72
+                               Drexel |         33        0.28       21.00
+                              Dubuque |          1        0.01       21.01
+                                 Duke |         34        0.29       21.30
+                             Duquesne |         32        0.27       21.57
+                        East Carolina |         31        0.26       21.83
+                         East Central |          2        0.02       21.85
+                 East Tennessee State |         35        0.30       22.14
+                   East Texas Baptist |          1        0.01       22.15
+                            East-West |          1        0.01       22.16
+                              Eastern |          1        0.01       22.17
+                     Eastern Illinois |         32        0.27       22.44
+                     Eastern Kentucky |         31        0.26       22.70
+                     Eastern Michigan |         34        0.29       22.99
+                   Eastern New Mexico |          1        0.01       23.00
+                       Eastern Oregon |          2        0.02       23.01
+                   Eastern Washington |         34        0.29       23.30
+                             Ecclesia |          3        0.03       23.33
+                        Edward Waters |          3        0.03       23.35
+                 Elizabeth City State |          1        0.01       23.36
+                               Elmira |          1        0.01       23.37
+                                 Elon |         32        0.27       23.64
+ Embry-Riddle Aeronautical University |          1        0.01       23.65
+                              Emerson |          1        0.01       23.66
+                                Emory |          1        0.01       23.66
+                        Emporia State |          1        0.01       23.67
+                              Erskine |          1        0.01       23.68
+                               Eureka |          3        0.03       23.71
+                              Evangel |          1        0.01       23.71
+                           Evansville |         32        0.27       23.99
+                            Fairfield |         33        0.28       24.26
+                  Fairleigh Dickinson |         32        0.27       24.53
+          Fairleigh Dickinson-Florham |          1        0.01       24.54
+                   Fayetteville State |          1        0.01       24.55
+                               Ferrum |          1        0.01       24.56
+                                 Fisk |          4        0.03       24.59
+                              Florida |         33        0.28       24.87
+                          Florida A&M |         34        0.29       25.16
+                     Florida Atlantic |         31        0.26       25.42
+                      Florida College |          2        0.02       25.44
+                   Florida Gulf Coast |         34        0.29       25.73
+                Florida International |         32        0.27       26.00
+                     Florida Memorial |          2        0.02       26.01
+          Florida National University |          4        0.03       26.05
+                        Florida State |         31        0.26       26.31
+                         Florida Tech |          1        0.01       26.32
+                            Fontbonne |          1        0.01       26.33
+                              Fordham |         31        0.26       26.59
+                           Franciscan |          2        0.02       26.61
+                         Fresno State |         33        0.28       26.89
+                      Frostburg State |          1        0.01       26.89
+                               Furman |         34        0.29       27.18
+                         Gardner-Webb |         33        0.28       27.46
+                           George Fox |          1        0.01       27.47
+                         George Mason |         33        0.28       27.75
+                    George Washington |         33        0.28       28.03
+                           Georgetown |         30        0.25       28.28
+                              Georgia |         33        0.28       28.56
+                     Georgia Southern |         33        0.28       28.84
+                 Georgia Southwestern |          1        0.01       28.85
+                        Georgia State |         34        0.29       29.14
+                         Georgia Tech |         32        0.27       29.41
+                       Georgian Court |          1        0.01       29.41
+                        Goldey-Beacom |          1        0.01       29.42
+                              Gonzaga |         34        0.29       29.71
+                               Gordon |          1        0.01       29.72
+                              Goucher |          1        0.01       29.73
+                            Grambling |         31        0.26       29.99
+                         Grand Canyon |         33        0.28       30.27
+                          Great Falls |          1        0.01       30.28
+                            Green Bay |         33        0.28       30.56
+                           Greensboro |          2        0.02       30.57
+                              Hampton |         34        0.29       30.86
+                    Hannibal-LaGrange |          1        0.01       30.87
+                       Hardin-Simmons |          1        0.01       30.88
+                         Harris-Stowe |          1        0.01       30.89
+                             Hartford |         32        0.27       31.16
+                             Hartwick |          1        0.01       31.17
+                              Harvard |         31        0.26       31.43
+     Haskell Indian Nations Institute |          1        0.01       31.44
+                               Hawaii |         30        0.25       31.69
+                          Hawaii-Hilo |          1        0.01       31.70
+                      Henderson State |          1        0.01       31.71
+                           High Point |         30        0.25       31.96
+                            Hillsdale |          2        0.02       31.98
+                             Hiwassee |          4        0.03       32.01
+                              Hofstra |         31        0.26       32.27
+                           Holy Cross |         31        0.26       32.54
+                           Holy Names |          2        0.02       32.55
+                              Houston |         34        0.29       32.84
+                      Houston Baptist |         31        0.26       33.10
+                               Howard |         33        0.28       33.38
+                         Howard Payne |          3        0.03       33.41
+                                 IPFW |         33        0.28       33.69
+                                IUPUI |         30        0.25       33.94
+                                Idaho |         31        0.26       34.20
+                          Idaho State |         31        0.26       34.46
+                             Illinois |         32        0.27       34.73
+                       Illinois State |         33        0.28       35.01
+                     Illinois-Chicago |         32        0.27       35.28
+                 Illinois-Springfield |          1        0.01       35.29
+                       Incarnate Word |         28        0.24       35.53
+                              Indiana |         31        0.26       35.79
+                        Indiana State |         31        0.26       36.05
+                       Indiana-Kokomo |          2        0.02       36.07
+                         Indianapolis |          1        0.01       36.08
+                                 Iona |         33        0.28       36.36
+                                 Iowa |         33        0.28       36.64
+                           Iowa State |         31        0.26       36.90
+                        Jackson State |         32        0.27       37.17
+                         Jacksonville |         33        0.28       37.45
+                   Jacksonville State |         34        0.29       37.74
+                        James Madison |         32        0.27       38.01
+                            Jamestown |          1        0.01       38.02
+                     Jarvis Christian |          2        0.02       38.03
+                             John Jay |          1        0.01       38.04
+                      Johnson & Wales |          2        0.02       38.06
+                 Johnson & Wales (NC) |          4        0.03       38.09
+                 Johnson & Wales (RI) |          1        0.01       38.10
+                   Johnson University |          2        0.02       38.12
+                               Kansas |         35        0.30       38.41
+                         Kansas State |         33        0.28       38.69
+                                 Kean |          2        0.02       38.71
+                       Kennesaw State |         30        0.25       38.96
+                           Kent State |         35        0.30       39.26
+                             Kentucky |         35        0.30       39.56
+                   Kentucky Christian |          2        0.02       39.57
+                       Kentucky State |          1        0.01       39.58
+                    Kentucky Wesleyan |          1        0.01       39.59
+                             La Salle |         32        0.27       39.86
+                             La Verne |          1        0.01       39.87
+                            Lafayette |         31        0.26       40.13
+                            Lake Erie |          1        0.01       40.14
+                             Lakeland |          1        0.01       40.15
+                                Lamar |         32        0.27       40.42
+                             Lawrence |          1        0.01       40.43
+                         LeMoyne-Owen |          1        0.01       40.43
+                           LeTourneau |          2        0.02       40.45
+                           Lees-McRae |          1        0.01       40.46
+                               Lehigh |         31        0.26       40.72
+                                Lewis |          1        0.01       40.73
+                              Liberty |         35        0.30       41.03
+                         Life Pacific |          4        0.03       41.06
+                            Limestone |          1        0.01       41.07
+                         Lincoln (PA) |          1        0.01       41.08
+                    Lincoln Christian |          1        0.01       41.09
+                             Linfield |          1        0.01       41.09
+                             Lipscomb |         32        0.27       41.37
+                     Long Beach State |         33        0.28       41.64
+               Long Island University |         35        0.30       41.94
+                             Longwood |         34        0.29       42.23
+                            Louisiana |         34        0.29       42.52
+                    Louisiana College |          3        0.03       42.54
+                      Louisiana State |         32        0.27       42.81
+           Louisiana State-Shreveport |          1        0.01       42.82
+                       Louisiana Tech |         33        0.28       43.10
+                     Louisiana-Monroe |         32        0.27       43.37
+                           Louisville |         33        0.28       43.65
+                              Lourdes |          1        0.01       43.66
+                          Loyola (IL) |         34        0.29       43.94
+                          Loyola (LA) |          2        0.02       43.96
+                          Loyola (MD) |         31        0.26       44.22
+                     Loyola Marymount |         31        0.26       44.49
+                            Lynchburg |          1        0.01       44.49
+                         Lyndon State |          1        0.01       44.50
+                                 Lyon |          1        0.01       44.51
+                                Maine |         33        0.28       44.79
+                      Maine-Fort Kent |          1        0.01       44.80
+                        Maine-Machias |          1        0.01       44.81
+                   Maine-Presque Isle |          1        0.01       44.82
+                            Manhattan |         31        0.26       45.08
+                               Marist |         31        0.26       45.34
+                            Marquette |         33        0.28       45.62
+                            Mars Hill |          1        0.01       45.63
+                             Marshall |         34        0.29       45.92
+                                 Mary |          1        0.01       45.92
+                             Maryland |         32        0.27       46.19
+            Maryland-Baltimore County |         34        0.29       46.48
+               Maryland-Eastern Shore |         32        0.27       46.75
+                        Massachusetts |         34        0.29       47.04
+Massachusetts Institute of Technology |          1        0.01       47.05
+                 Massachusetts-Boston |          1        0.01       47.06
+                 Massachusetts-Lowell |         30        0.25       47.31
+                       Mayville State |          2        0.02       47.33
+                              McMurry |          2        0.02       47.34
+                        McNeese State |         29        0.25       47.59
+                              Memphis |         35        0.30       47.89
+                               Mercer |         32        0.27       48.16
+                                Mercy |          1        0.01       48.16
+                            Methodist |          2        0.02       48.18
+                           Miami (FL) |         32        0.27       48.45
+                           Miami (OH) |         33        0.28       48.73
+                             Michigan |         36        0.30       49.04
+                       Michigan State |         33        0.28       49.31
+                    Michigan-Dearborn |          2        0.02       49.33
+               Mid-Atlantic Christian |          3        0.03       49.36
+                 Middle Georgia State |          2        0.02       49.37
+                     Middle Tennessee |         31        0.26       49.64
+                               Midway |          3        0.03       49.66
+                                Miles |          1        0.01       49.67
+                             Milligan |          3        0.03       49.70
+                             Millsaps |          2        0.02       49.71
+                            Milwaukee |         33        0.28       49.99
+                            Minnesota |         33        0.28       50.27
+                          Mississippi |         32        0.27       50.54
+                  Mississippi College |          1        0.01       50.55
+                    Mississippi State |         33        0.28       50.83
+             Mississippi Valley State |         32        0.27       51.10
+                             Missouri |         33        0.28       51.38
+          Missouri Baptist University |          1        0.01       51.39
+                         Missouri S&T |          1        0.01       51.40
+                       Missouri State |         34        0.29       51.68
+                 Missouri-Kansas City |         32        0.27       51.95
+                   Missouri-St. Louis |          1        0.01       51.96
+                             Mitchell |          1        0.01       51.97
+                               Mobile |          2        0.02       51.99
+                               Molloy |          2        0.02       52.00
+                             Monmouth |         31        0.26       52.27
+                              Montana |         33        0.28       52.55
+                        Montana State |         32        0.27       52.82
+                         Montana Tech |          1        0.01       52.82
+                      Montana Western |          1        0.01       52.83
+                             Montreat |          2        0.02       52.85
+                       Morehead State |         29        0.25       53.10
+                         Morgan State |         32        0.27       53.37
+                       Morris College |          1        0.01       53.37
+                          Mount Marty |          1        0.01       53.38
+                     Mount St. Mary's |         32        0.27       53.65
+                            Multnomah |          1        0.01       53.66
+                         Murray State |         31        0.26       53.92
+                                 NJIT |         30        0.25       54.18
+                                 Navy |         32        0.27       54.45
+                             Nebraska |         32        0.27       54.72
+                   Nebraska Christian |          1        0.01       54.73
+                       Nebraska-Omaha |         31        0.26       54.99
+                               Nevada |         34        0.29       55.28
+                     Nevada-Las Vegas |         33        0.28       55.56
+                        New Hampshire |         31        0.26       55.82
+                           New Mexico |         34        0.29       56.11
+                 New Mexico Highlands |          1        0.01       56.11
+                     New Mexico State |         33        0.28       56.39
+                          New Orleans |         31        0.26       56.66
+                         New Rochelle |          2        0.02       56.67
+                              Niagara |         32        0.27       56.94
+                       Nicholls State |         32        0.27       57.21
+                        Norfolk State |         33        0.28       57.49
+                       North Carolina |         35        0.30       57.79
+                   North Carolina A&T |         34        0.29       58.08
+               North Carolina Central |         34        0.29       58.36
+                 North Carolina State |         33        0.28       58.64
+              North Carolina Wesleyan |          4        0.03       58.68
+             North Carolina-Asheville |         33        0.28       58.96
+            North Carolina-Greensboro |         34        0.29       59.24
+            North Carolina-Wilmington |         32        0.27       59.51
+                         North Dakota |         32        0.27       59.79
+                   North Dakota State |         33        0.28       60.06
+                        North Florida |         33        0.28       60.34
+                        North Georgia |          1        0.01       60.35
+                     North Greenville |          2        0.02       60.37
+                           North Park |          1        0.01       60.38
+                          North Texas |         32        0.27       60.65
+                         Northeastern |         33        0.28       60.93
+                     Northern Arizona |         32        0.27       61.20
+                    Northern Colorado |         34        0.29       61.49
+                    Northern Illinois |         32        0.27       61.76
+                        Northern Iowa |         32        0.27       62.03
+                    Northern Kentucky |         32        0.27       62.30
+                  Northern New Mexico |          3        0.03       62.32
+                            Northland |          2        0.02       62.34
+                   Northwest Nazarene |          1        0.01       62.35
+                         Northwestern |         32        0.27       62.62
+                    Northwestern Ohio |          1        0.01       62.63
+                   Northwestern State |         29        0.25       62.87
+                       Northwood (MI) |          1        0.01       62.88
+                           Notre Dame |         35        0.30       63.18
+                      Notre Dame (CA) |          3        0.03       63.20
+                  Oak Hills Christian |          1        0.01       63.21
+                              Oakland |         33        0.28       63.49
+                         Oakland City |          3        0.03       63.51
+                           Oglethorpe |          1        0.01       63.52
+                                 Ohio |         32        0.27       63.79
+                       Ohio Christian |          1        0.01       63.80
+                        Ohio Northern |          1        0.01       63.81
+                           Ohio State |         32        0.27       64.08
+                          Ohio Valley |          2        0.02       64.10
+                             Oklahoma |         31        0.26       64.36
+                       Oklahoma State |         34        0.29       64.65
+                         Old Dominion |         32        0.27       64.92
+                               Olivet |          1        0.01       64.93
+                         Oral Roberts |         33        0.28       65.21
+                               Oregon |         34        0.29       65.49
+                         Oregon State |         32        0.27       65.76
+                          Oregon Tech |          1        0.01       65.77
+                               Ottawa |          1        0.01       65.78
+                             Ouachita |          1        0.01       65.79
+                 Our Lady of the Lake |          2        0.02       65.81
+                              Pacific |         32        0.27       66.08
+                     Pacific Lutheran |          1        0.01       66.09
+                        Pacific Union |          1        0.01       66.09
+                                Paine |          1        0.01       66.10
+                      Panhandle State |          2        0.02       66.12
+                                Peace |          1        0.01       66.13
+                Penn St. - Brandywine |          1        0.01       66.14
+                           Penn State |         34        0.29       66.42
+                         Pennsylvania |         32        0.27       66.69
+                           Pepperdine |         32        0.27       66.97
+                           Peru State |          1        0.01       66.97
+                             Piedmont |          3        0.03       67.00
+                           Pittsburgh |         32        0.27       67.27
+                  Pittsburgh-Bradford |          1        0.01       67.28
+                     Point University |          2        0.02       67.30
+                             Portland |         32        0.27       67.57
+               Portland Bible College |          1        0.01       67.57
+                       Portland State |         33        0.28       67.85
+                         Prairie View |         34        0.29       68.14
+                         Presbyterian |         32        0.27       68.41
+                 Presentation College |          3        0.03       68.44
+                            Princeton |         29        0.25       68.68
+                           Providence |         35        0.30       68.98
+                          Puget Sound |          1        0.01       68.99
+                               Purdue |         34        0.29       69.27
+                               Quincy |          1        0.01       69.28
+                           Quinnipiac |         33        0.28       69.56
+                              Radford |         35        0.30       69.86
+                            Reinhardt |          2        0.02       69.87
+                         Rhode Island |         32        0.27       70.15
+                                 Rice |         31        0.26       70.41
+                             Richmond |         32        0.27       70.68
+                                Rider |         31        0.26       70.94
+                           Rio Grande |          1        0.01       70.95
+                        Robert Morris |         34        0.29       71.24
+                       Rochester (MI) |          1        0.01       71.24
+                             Rockford |          2        0.02       71.26
+                            Rockhurst |          1        0.01       71.27
+                         Rogers State |          1        0.01       71.28
+                                Rowan |          1        0.01       71.29
+                                 Rust |          3        0.03       71.31
+                              Rutgers |         34        0.29       71.60
+                        SUNY-Maritime |          1        0.01       71.61
+                         SUNY-Oneonta |          1        0.01       71.62
+                     Sacramento State |         32        0.27       71.89
+                         Sacred Heart |         32        0.27       72.16
+                   Saint Francis (PA) |         30        0.25       72.41
+                       Saint Joseph's |         32        0.27       72.68
+                            Saint Leo |          1        0.01       72.69
+                          Saint Louis |         33        0.28       72.97
+                       Saint Martin's |          1        0.01       72.98
+                    Saint Mary's (CA) |         33        0.28       73.26
+                    Saint Mary's (MN) |          1        0.01       73.27
+                        Saint Peter's |         32        0.27       73.54
+                    Sam Houston State |         33        0.28       73.82
+                              Samford |         32        0.27       74.09
+                            San Diego |         31        0.26       74.35
+                  San Diego Christian |          5        0.04       74.39
+                      San Diego State |         32        0.27       74.66
+                        San Francisco |         33        0.28       74.94
+                  San Francisco State |          1        0.01       74.95
+                       San Jose State |         30        0.25       75.20
+                          Santa Clara |         31        0.26       75.47
+                       Sarah Lawrence |          1        0.01       75.47
+                       Savannah State |         32        0.27       75.74
+                            Schreiner |          2        0.02       75.76
+                              Seattle |         33        0.28       76.04
+                           Seton Hall |         32        0.27       76.31
+                        Shawnee State |          1        0.01       76.32
+                           Shenandoah |          2        0.02       76.34
+                                Siena |         32        0.27       76.61
+                        Siena Heights |          3        0.03       76.63
+                          Silver Lake |          1        0.01       76.64
+              Simon Fraser University |          1        0.01       76.65
+                         Sonoma State |          1        0.01       76.66
+                        South Alabama |         32        0.27       76.93
+                       South Carolina |         34        0.29       77.22
+                 South Carolina State |         32        0.27       77.49
+               South Carolina Upstate |         32        0.27       77.76
+                         South Dakota |         35        0.30       78.05
+                   South Dakota State |         34        0.29       78.34
+                        South Florida |         32        0.27       78.61
+             Southeast Missouri State |         31        0.26       78.87
+                         Southeastern |          1        0.01       78.88
+               Southeastern Louisiana |         33        0.28       79.16
+                             Southern |         33        0.28       79.44
+                  Southern California |         34        0.29       79.73
+                    Southern Illinois |         33        0.28       80.01
+       Southern Illinois-Edwardsville |         31        0.26       80.27
+                   Southern Methodist |         33        0.28       80.55
+                 Southern Mississippi |         34        0.29       80.84
+                    Southern Nazarene |          1        0.01       80.84
+                        Southern Utah |         33        0.28       81.12
+                    Southern Wesleyan |          2        0.02       81.14
+                 Southern-New Orleans |          4        0.03       81.17
+                         Southwestern |          1        0.01       81.18
+                         Spring Arbor |          1        0.01       81.19
+                          Spring Hill |          2        0.02       81.21
+                          St. Andrews |          2        0.02       81.22
+                      St. Bonaventure |         32        0.27       81.50
+                         St. Edward's |          2        0.02       81.51
+                     St. Francis (IL) |          2        0.02       81.53
+                     St. Francis (NY) |         31        0.26       81.79
+                      St. John's (NY) |         34        0.29       82.08
+                      St. Mary's (MD) |          1        0.01       82.09
+                      St. Mary's (TX) |          1        0.01       82.10
+                      St. Thomas (TX) |          3        0.03       82.12
+                             Stanford |         33        0.28       82.40
+                        Staten Island |          1        0.01       82.41
+                    Stephen F. Austin |         34        0.29       82.70
+                              Stetson |         32        0.27       82.97
+                          Stony Brook |         32        0.27       83.24
+                          Susquehanna |          1        0.01       83.25
+                             Syracuse |         33        0.28       83.53
+                               Temple |         32        0.27       83.80
+                            Tennessee |         33        0.28       84.07
+                      Tennessee State |         30        0.25       84.33
+                       Tennessee Tech |         34        0.29       84.62
+                   Tennessee Wesleyan |          3        0.03       84.64
+                     Tennessee-Martin |         31        0.26       84.90
+                                Texas |         33        0.28       85.18
+                            Texas A&M |         33        0.28       85.46
+             Texas A&M-Corpus Christi |         29        0.25       85.71
+              Texas A&M-International |          1        0.01       85.72
+                      Texas Christian |         33        0.28       85.99
+                        Texas College |          1        0.01       86.00
+                       Texas Lutheran |          2        0.02       86.02
+                       Texas Southern |         34        0.29       86.31
+                          Texas State |         33        0.28       86.59
+                           Texas Tech |         34        0.29       86.87
+                      Texas-Arlington |         34        0.29       87.16
+                         Texas-Dallas |          1        0.01       87.17
+                        Texas-El Paso |         31        0.26       87.43
+              Texas-Rio Grande Valley |         32        0.27       87.70
+                    Texas-San Antonio |         33        0.28       87.98
+                          Texas-Tyler |          2        0.02       88.00
+                    Thomas University |          1        0.01       88.01
+                               Tiffin |          1        0.01       88.02
+                         Toccoa Falls |          7        0.06       88.08
+                               Toledo |         34        0.29       88.36
+                             Tougaloo |          1        0.01       88.37
+                               Towson |         32        0.27       88.64
+                    Trevecca Nazarene |          1        0.01       88.65
+                         Trinity (TX) |          1        0.01       88.66
+                      Trinity Baptist |          4        0.03       88.69
+                    Trinity Christian |          2        0.02       88.71
+                                 Troy |         33        0.28       88.99
+                               Tulane |         31        0.26       89.25
+                                Tulsa |         31        0.26       89.51
+                             Tusculum |          1        0.01       89.52
+                             UC-Davis |         32        0.27       89.79
+                            UC-Irvine |         35        0.30       90.09
+                            UC-Merced |          1        0.01       90.10
+                         UC-Riverside |         31        0.26       90.36
+                     UC-Santa Barbara |         32        0.27       90.63
+                        UC-Santa Cruz |          1        0.01       90.64
+                                 UCLA |         32        0.27       90.91
+             University of California |         32        0.27       91.18
+             University of the Ozarks |          2        0.02       91.20
+                                 Utah |         30        0.25       91.45
+                           Utah State |         34        0.29       91.74
+                          Utah Valley |         32        0.27       92.01
+                    Valley City State |          1        0.01       92.02
+                         Valley Forge |          1        0.01       92.02
+                           Valparaiso |         32        0.27       92.30
+                           Vanderbilt |         32        0.27       92.57
+                              Vermont |         34        0.29       92.85
+                            Villanova |         34        0.29       93.14
+                             Virginia |         33        0.28       93.42
+                Virginia Commonwealth |         33        0.28       93.70
+          Virginia Military Institute |         30        0.25       93.95
+                        Virginia Tech |         33        0.28       94.23
+                               Wagner |         32        0.27       94.50
+                          Wake Forest |         32        0.27       94.77
+                          Walla Walla |          2        0.02       94.79
+                        Warren Wilson |          2        0.02       94.81
+                             Wartburg |          1        0.01       94.82
+                           Washington |         32        0.27       95.09
+                     Washington & Lee |          1        0.01       95.09
+                 Washington Adventist |          1        0.01       95.10
+                   Washington College |          2        0.02       95.12
+                     Washington State |         31        0.26       95.38
+                      Wayland Baptist |          1        0.01       95.39
+                               Webber |          4        0.03       95.42
+                          Weber State |         31        0.26       95.69
+                            Wentworth |          1        0.01       95.70
+                               Wesley |          1        0.01       95.70
+                   West Coast Baptist |          1        0.01       95.71
+                        West Virginia |         34        0.29       96.00
+                     Western Carolina |         32        0.27       96.27
+                     Western Illinois |         29        0.25       96.52
+                     Western Kentucky |         34        0.29       96.80
+                     Western Michigan |         32        0.27       97.07
+                   Western New Mexico |          1        0.01       97.08
+                        Western State |          2        0.02       97.10
+                          Westminster |          1        0.01       97.11
+                         Wheaton (MA) |          1        0.01       97.12
+                             Wheelock |          1        0.01       97.12
+                             Whittier |          2        0.02       97.14
+                            Whitworth |          1        0.01       97.15
+                        Wichita State |         32        0.27       97.42
+                                Wiley |          1        0.01       97.43
+                           Willamette |          1        0.01       97.44
+                       William & Mary |         31        0.26       97.70
+                        William Carey |          1        0.01       97.71
+                       William Jessup |          2        0.02       97.72
+                       William Jewell |          1        0.01       97.73
+                     Williams Baptist |          1        0.01       97.74
+                      Wilmington (OH) |          1        0.01       97.75
+                             Winthrop |         32        0.27       98.02
+                            Wisconsin |         33        0.28       98.30
+                  Wisconsin-La Crosse |          1        0.01       98.31
+                   Wisconsin-Parkside |          2        0.02       98.33
+                              Wofford |         33        0.28       98.60
+                         Wright State |         34        0.29       98.89
+                              Wyoming |         34        0.29       99.18
+                               Xavier |         33        0.28       99.46
+                                 Yale |         31        0.26       99.72
+                            York (PA) |          1        0.01       99.73
+                     Youngstown State |         32        0.27      100.00
+--------------------------------------+-----------------------------------
+                                Total |     11,824      100.00
+
+. *assuming UNC is North Carolina:
+. gen UNCblowout=1 if blowout==1 & team=="North Carolina"
+(11,818 missing values generated)
+
+. tab UNCblowout
+
+ UNCblowout |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          6      100.00      100.00
+------------+-----------------------------------
+      Total |          6      100.00
+
+. *total unc blowouts = 6
+. 
+end of do-file
+
+. exit, clear

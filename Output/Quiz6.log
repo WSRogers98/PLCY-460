@@ -1,0 +1,135 @@
+----------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\willi\Documents\PLCY460\Output\Quiz6.log
+  log type:  text
+ opened on:  25 Sep 2020, 12:45:02
+
+. use "C:\Users\willi\Documents\PLCY460\Master Data\NLSY 05_Q6"
+
+. sum momhighgrade97, detail
+
+              Mother's highest grade completed
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%           -4             -4
+ 5%           -4             -4
+10%           -3             -4       Obs               8,977
+25%           10             -4       Sum of Wgt.       8,977
+
+50%           12                      Mean           10.77186
+                        Largest       Std. Dev.      5.763023
+75%           14             20
+90%           16             20       Variance       33.21243
+95%           17             20       Skewness      -1.533878
+99%           19             20       Kurtosis       4.647773
+
+. tab momhighgrade97
+
+  Mother's highest grade |
+               completed |      Freq.     Percent        Cum.
+-------------------------+-----------------------------------
+                      -4 |        658        7.33        7.33
+                      -3 |        316        3.52       10.85
+               1ST GRADE |          3        0.03       10.88
+               2ND GRADE |         28        0.31       11.20
+               3RD GRADE |         51        0.57       11.76
+               4TH GRADE |         54        0.60       12.36
+               5TH GRADE |         54        0.60       12.97
+               6TH GRADE |        221        2.46       15.43
+               7TH GRADE |         67        0.75       16.17
+               8TH GRADE |        183        2.04       18.21
+               9TH GRADE |        260        2.90       21.11
+              10TH GRADE |        373        4.16       25.26
+              11TH GRADE |        517        5.76       31.02
+              12TH GRADE |      2,868       31.95       62.97
+        1ST YEAR COLLEGE |        639        7.12       70.09
+        2ND YEAR COLLEGE |        996       11.10       81.19
+        3RD YEAR COLLEGE |        251        2.80       83.98
+        4TH YEAR COLLEGE |        902       10.05       94.03
+        5TH YEAR COLLEGE |        163        1.82       95.84
+        6TH YEAR COLLEGE |        246        2.74       98.59
+        7TH YEAR COLLEGE |         38        0.42       99.01
+8TH YEAR COLLEGE OR MORE |         89        0.99      100.00
+-------------------------+-----------------------------------
+                   Total |      8,977      100.00
+
+. 
+. * I am currently confusing stata with my other programming languages so doing this by hand
+. * I may use # instead of * to commennt on accident as well, sorry its been a long week of C programming
+. 
+. *total without no answer= 8003
+. *total less than HS= 1811
+. *22.63%
+. 
+. regress faminc05 momhighgrade97
+
+      Source |       SS           df       MS      Number of obs   =     8,977
+-------------+----------------------------------   F(1, 8975)      =     66.95
+       Model |  2.0854e+11         1  2.0854e+11   Prob > F        =    0.0000
+    Residual |  2.7955e+13     8,975  3.1148e+09   R-squared       =    0.0074
+-------------+----------------------------------   Adj R-squared   =    0.0073
+       Total |  2.8164e+13     8,976  3.1377e+09   Root MSE        =     55810
+
+--------------------------------------------------------------------------------
+      faminc05 |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+---------------+----------------------------------------------------------------
+momhighgrade97 |   836.3739   102.2171     8.18   0.000     636.0052    1036.743
+         _cons |   27255.75    1248.73    21.83   0.000     24807.96    29703.55
+--------------------------------------------------------------------------------
+
+. * i remebered how to do it
+. drop if  momhighgrade97 <0
+(974 observations deleted)
+
+. drop if faminc05 <0
+(2,644 observations deleted)
+
+. tab momhighgrade97
+
+  Mother's highest grade |
+               completed |      Freq.     Percent        Cum.
+-------------------------+-----------------------------------
+               1ST GRADE |          3        0.06        0.06
+               2ND GRADE |         16        0.30        0.35
+               3RD GRADE |         34        0.63        0.99
+               4TH GRADE |         44        0.82        1.81
+               5TH GRADE |         36        0.67        2.48
+               6TH GRADE |        154        2.87        5.36
+               7TH GRADE |         44        0.82        6.18
+               8TH GRADE |        121        2.26        8.43
+               9TH GRADE |        178        3.32       11.76
+              10TH GRADE |        257        4.80       16.55
+              11TH GRADE |        331        6.18       22.73
+              12TH GRADE |      1,856       34.63       57.36
+        1ST YEAR COLLEGE |        420        7.84       65.20
+        2ND YEAR COLLEGE |        701       13.08       78.28
+        3RD YEAR COLLEGE |        169        3.15       81.43
+        4TH YEAR COLLEGE |        598       11.16       92.59
+        5TH YEAR COLLEGE |        119        2.22       94.81
+        6TH YEAR COLLEGE |        177        3.30       98.12
+        7TH YEAR COLLEGE |         32        0.60       98.71
+8TH YEAR COLLEGE OR MORE |         69        1.29      100.00
+-------------------------+-----------------------------------
+                   Total |      5,359      100.00
+
+. 
+. * the question wording makes me thing fam is dependent and mom is independent 
+. regress faminc05 momhighgrade97
+
+      Source |       SS           df       MS      Number of obs   =     5,359
+-------------+----------------------------------   F(1, 5357)      =     71.09
+       Model |  2.6918e+11         1  2.6918e+11   Prob > F        =    0.0000
+    Residual |  2.0284e+13     5,357  3.7864e+09   R-squared       =    0.0131
+-------------+----------------------------------   Adj R-squared   =    0.0129
+       Total |  2.0553e+13     5,358  3.8359e+09   Root MSE        =     61534
+
+--------------------------------------------------------------------------------
+      faminc05 |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+---------------+----------------------------------------------------------------
+momhighgrade97 |   2349.757   278.6843     8.43   0.000     1803.422    2896.092
+         _cons |   26018.65    3601.96     7.22   0.000     18957.35    33079.96
+--------------------------------------------------------------------------------
+
+. 
+end of do-file
+

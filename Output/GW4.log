@@ -1,0 +1,141 @@
+------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\willi\Documents\PLCY460\Output\GW4.log
+  log type:  text
+ opened on:   4 Sep 2020, 14:16:32
+
+. 
+. * Merging spreadhseet and data
+. insheet using "C:\Users\willi\Documents\PLCY460\2016ue.csv"
+(3 vars, 51 obs)
+
+. save  "C:\Users\willi\Documents\PLCY460\Master Data\GW4", replace
+file C:\Users\willi\Documents\PLCY460\Master Data\GW4.dta saved
+
+. use "C:\Users\willi\Documents\PLCY460\Master Data\GW4"
+
+. merge 1:m statefip using "C:\Users\willi\Documents\PLCY460\Master Data\2016ACS-cle
+> an"
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                             0
+    matched                           113,052  (_merge==3)
+    -----------------------------------------
+
+. 
+. *creating and labeling  a Full Time Variable
+. gen fulltime=1 if uhrswork >= 40
+(43,898 missing values generated)
+
+. replace fulltime=0 if uhrswork < 40
+(43,898 real changes made)
+
+. label variable fulltime "Full time Employment (40 hours or more)"
+
+. label define ftlabel 0 "Not Full Time" 1 "Full Time"
+
+. label values fulltime ftlabel
+
+. 
+. * Finding ratio for north and south carolina
+. tab fulltime if state=="North Carolina"
+
+    Full time |
+   Employment |
+ (40 hours or |
+        more) |      Freq.     Percent        Cum.
+--------------+-----------------------------------
+Not Full Time |      1,369       38.88       38.88
+    Full Time |      2,152       61.12      100.00
+--------------+-----------------------------------
+        Total |      3,521      100.00
+
+. tab fulltime if state=="South Carolina"
+
+    Full time |
+   Employment |
+ (40 hours or |
+        more) |      Freq.     Percent        Cum.
+--------------+-----------------------------------
+Not Full Time |        714       41.25       41.25
+    Full Time |      1,017       58.75      100.00
+--------------+-----------------------------------
+        Total |      1,731      100.00
+
+. 
+. *labeling race & black variable 
+. label variable race "Race [general version]"
+
+. label define racelabel 1 "White" 2 "black/African American" 3 "American Indian or 
+> Alaska Native" 4 "Chinese" 5"Japanese" 6 "Other Asian or Pacific Islander" 7 "Othe
+> r race, nec" 8 "Two major races" 9 "Three or more major races"
+
+. label values race racelabel
+
+. gen black=1 if race ==2
+(102,402 missing values generated)
+
+. replace black=0 if race!=2
+(102,402 real changes made)
+
+. label define blacklabel 0 "not Black" 1 "Black"
+
+. label values black blacklabel
+
+. tab race 
+
+          Race [general version] |      Freq.     Percent        Cum.
+---------------------------------+-----------------------------------
+                           White |     88,563       78.34       78.34
+          black/African American |     10,650        9.42       87.76
+American Indian or Alaska Native |      1,034        0.91       88.67
+                         Chinese |      1,865        1.65       90.32
+                        Japanese |        364        0.32       90.65
+ Other Asian or Pacific Islander |      5,069        4.48       95.13
+                 Other race, nec |      3,240        2.87       97.99
+                 Two major races |      2,012        1.78       99.77
+       Three or more major races |        255        0.23      100.00
+---------------------------------+-----------------------------------
+                           Total |    113,052      100.00
+
+. tab black
+
+      black |      Freq.     Percent        Cum.
+------------+-----------------------------------
+  not Black |    102,402       90.58       90.58
+      Black |     10,650        9.42      100.00
+------------+-----------------------------------
+      Total |    113,052      100.00
+
+. 
+. * generating rent per bedroom
+. gen rpbdrm=rent/bedrooms
+(4,448 missing values generated)
+
+. label variable rpbdrm " Rent per Bedroom"
+
+. sum rpbdrm, detail
+
+                      Rent per Bedroom
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%            0              0
+ 5%            0              0
+10%            0              0       Obs             108,604
+25%            0              0       Sum of Wgt.     108,604
+
+50%            0                      Mean           135.7562
+                        Largest       Std. Dev.      322.8257
+75%            0           3900
+90%          500           3900       Variance       104216.5
+95%          775           3900       Skewness       3.661867
+99%         1500           3900       Kurtosis       22.13214
+
+. 
+end of do-file
+
+. save "C:\Users\willi\Documents\PLCY460\Cleaned Data\GW4.dta"
+file C:\Users\willi\Documents\PLCY460\Cleaned Data\GW4.dta saved
+
+. exit

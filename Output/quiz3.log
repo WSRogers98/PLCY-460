@@ -1,0 +1,65 @@
+------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\willi\Documents\PLCY460\Output\quiz3.log
+  log type:  text
+ opened on:   4 Sep 2020, 12:29:07
+
+. 
+. *DATA: US Census 1940 1% Sample
+. use "C:\Users\willi\Documents\PLCY460\Master Data\Quiz3"
+
+. 
+. tab marst
+
+        marital status |      Freq.     Percent        Cum.
+-----------------------+-----------------------------------
+married spouse present |      2,484       61.93       61.93
+ married spouse absent |         80        1.99       63.92
+             separated |        126        3.14       67.07
+              divorced |        480       11.97       79.03
+               widowed |         75        1.87       80.90
+         never married |        766       19.10      100.00
+-----------------------+-----------------------------------
+                 Total |      4,011      100.00
+
+. sum uhrswork, detail
+
+                 usual hours worked per week
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%            5              1
+ 5%           18              1
+10%           25              1       Obs               4,011
+25%           40              1       Sum of Wgt.       4,011
+
+50%           40                      Mean           40.45275
+                        Largest       Std. Dev.      11.73381
+75%           45             99
+90%           55             99       Variance       137.6822
+95%           60             99       Skewness      -.2045325
+99%           70             99       Kurtosis       5.591303
+
+. 
+. gen married=1 if marst==1
+(1,527 missing values generated)
+
+. replace married=0 if marst==6
+(766 real changes made)
+
+. 
+. sum uhrswork if married==1
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+    uhrswork |      2,484    41.16707    11.56006          1         99
+
+. sum uhrswork if married==0
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+    uhrswork |        766    39.16319     11.7546          1         80
+
+. 
+end of do-file
+
+. exit, clear
